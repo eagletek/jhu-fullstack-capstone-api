@@ -8,3 +8,4 @@
 //= require photo-tourist/app.module
 //= require photo-tourist/app.router
 //= require photo-tourist/app.constant
+//= require photo-tourist/cities/cities.module
