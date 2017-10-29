@@ -30,7 +30,9 @@
     function handleError(response) {
       console.log(response);
     }
-    function edit(object, index) {
+    function edit(object) {
+      console.log("Selected:", object);
+      vm.city = object;
     }
     function create() {
       //console.log("Creating city: ", vm.city)
@@ -43,10 +45,31 @@
         .catch(handleError)
     }
     function update() {
+      vm.city.$update()
+        .then(function(response){
+          //console.log(response);
+        })
+        .catch(handleError)
     }
     function remove() {
+      vm.city.$delete()
+        .then(function(response){
+          // Remove element from local array
+          removeElement(vm.cities, vm.city)
+          // Refresh from server if other elements may have changed
+          //vm.cities = City.query();
+          // Replace edit area with prototype instance
+          newCity();
+        })
+        .catch(handleError);
     }
     function removeElement(elements, element) {
+      for (var i=0; i<elements.length; i++) {
+        if (elements[i].id == element.id) {
+          elements.splice(i, 1);
+          break;
+        }
+      }
     }
   }
 
