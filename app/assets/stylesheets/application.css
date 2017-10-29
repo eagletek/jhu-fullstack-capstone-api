@@ -2,4 +2,6 @@
  * Stylesheet Manifest File
  *
  *= require bootstrap
+ *
+ *= require photo-tourist/layout
  */
