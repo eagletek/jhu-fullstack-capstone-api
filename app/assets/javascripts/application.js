@@ -11,3 +11,4 @@
 //= require photo-tourist/cities/cities.module
 //= require photo-tourist/cities/cities.service
 //= require photo-tourist/cities/cities.controller
+//= require photo-tourist/cities/cities.directive

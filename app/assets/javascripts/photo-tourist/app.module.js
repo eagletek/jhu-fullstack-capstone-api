@@ -3,6 +3,7 @@
 
   angular
     .module("photo-tourist", [
-      "ui.router"
+      "ui.router",
+      "photo-tourist.cities"
     ]);
 })();
