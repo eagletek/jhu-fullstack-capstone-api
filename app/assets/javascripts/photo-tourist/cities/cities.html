@@ -22,7 +22,10 @@
   </div>
 
   <div class="list-group">
-    <a class="list-group-item" ng-class="{'active':citiesVM.city.id === city.id}" ng-click="citiesVM.edit(city)" ng-repeat="city in citiesVM.cities | orderBy: 'name'">
+    <a class="list-group-item"
+       ng-repeat="city in citiesVM.cities | orderBy: 'name'"
+       ng-class="{'active':citiesVM.city.id === city.id}"
+       ng-click="citiesVM.edit(city)">
       {{city.name}}
     </a>
   </div>
