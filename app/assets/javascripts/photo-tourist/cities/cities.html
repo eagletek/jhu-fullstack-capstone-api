@@ -2,6 +2,14 @@
   <h3>Cities</h3>
   <span> (from photo-tourist/cities/cities.html) </span>
 
+  <form>
+    <div>
+      <label for="name">Name:</label>
+      <input name="name" ng-model="citiesVM.city.name" required="required">
+      <button class="btn btn-primary" type="submit" ng-if="!citiesVM.city.id" ng-click="citiesVM.create()">Create City</button>
+    </div>
+  </form>
+
   <ul>
     <li ng-repeat="city in citiesVM.cities | orderBy: 'name'">
       <a ng-click="citiesVM.edit(city)">{{city.name}}</a>
