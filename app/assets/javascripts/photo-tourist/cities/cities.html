@@ -2,21 +2,29 @@
   <h3>Cities</h3>
   <span> (from photo-tourist/cities/cities.html) </span>
 
-  <form>
-    <div>
-      <label for="name">Name:</label>
-      <input name="name" ng-model="citiesVM.city.name" required="required">
-      <button class="btn btn-primary" type="submit" ng-if="!citiesVM.city.id" ng-click="citiesVM.create()">Create City</button>
-      <span class="btn-group" ng-if="citiesVM.city.id">
-        <button class="btn btn-success" type="submit" ng-click="citiesVM.update()">Update City</button>
-        <button class="btn btn-danger" type="submit" ng-click="citiesVM.remove()">Delete City</button>
-      </span>
-    </div>
-  </form>
+  <div class="row">
+    <form class="form-inline col-sm-6">
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <div class="input-group">
+          <input type="text" placeholder="City Name" class="form-control" name="name" ng-model="citiesVM.city.name" required="required">
+          <span class="input-group-btn" ng-if="!citiesVM.city.id">
+            <button class="btn btn-primary" type="submit" ng-click="citiesVM.create()">Add City</button>
+          </span>
+          <span class="input-group-btn" ng-if="citiesVM.city.id">
+            <button class="btn btn-success" type="submit" ng-click="citiesVM.update()">Update City</button>
+            <button class="btn btn-danger" type="submit" ng-click="citiesVM.remove()">Delete City</button>
+          </span>
+        </div>
+      </div>
+    </form>
+  </div>
 
-  <ul>
-    <li ng-repeat="city in citiesVM.cities | orderBy: 'name'">
-      <a ng-click="citiesVM.edit(city)">{{city.name}}</a>
-    </li>
-  </ul>
+  <div class="row">
+    <div class="list-group col-sm-6">
+      <a class="list-group-item" ng-class="{'active':citiesVM.city.id === city.id}" ng-click="citiesVM.edit(city)" ng-repeat="city in citiesVM.cities | orderBy: 'name'">
+        {{city.name}}
+      </a>
+    </ul>
+  </div>
 </div>

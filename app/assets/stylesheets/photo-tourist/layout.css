@@ -2,6 +2,10 @@
  * photo-tourist/layout.css
  */
 
+a:hover {
+  cursor: pointer;
+}
+
 body {
   background-color: #eee;
 }
