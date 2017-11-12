@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::API
+  include DeviseTokenAuth::Concerns::SetUserByToken
   # Make the connection between the controller action and the associated view.
   include ActionController::ImplicitRender
 
