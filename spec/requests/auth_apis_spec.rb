@@ -54,8 +54,17 @@ RSpec.describe "Authentication Api", type: :request do
   end
 
   context 'anonymous user' do
-    it "accesses unprotected resources"
-    it "fails to access protected resources"
+    it "accesses unprotected resources" do
+      get authn_whoami_path
+      expect(response).to have_http_status(:ok)
+      expect(parsed_body).to eq({})
+    end
+
+    it "fails to access protected resources" do
+      get authn_checkme_path
+      expect(response).to have_http_status(:unauthorized)
+      expect(parsed_body).to include("errors"=>["You need to sign in or sign up before continuing."])
+    end
   end
 
   context 'login' do
