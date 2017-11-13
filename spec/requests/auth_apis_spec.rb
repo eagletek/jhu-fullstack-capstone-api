@@ -69,14 +69,59 @@ RSpec.describe "Authentication Api", type: :request do
 
   context 'login' do
     context 'with valid credentials' do
-      it "generates access token"
-      it "grants access to resource"
-      it "grants access to resource multiple times"
-      it "can logout"
+      let(:account) { signup user_props, :ok }
+      let!(:user) { login account, :ok }
+
+      it "generates access token" do
+        expect(response.headers).to include("uid"=>account[:uid])
+        expect(response.headers).to include("access-token")
+        expect(response.headers).to include("client")
+        expect(response.headers).to include("token-type"=>"Bearer")
+      end
+
+      it "extracts access headers" do
+        expect(access_tokens?).to be true
+        expect(access_tokens).to include("uid"=>account[:uid])
+        expect(access_tokens).to include("access-token")
+        expect(access_tokens).to include("client")
+        expect(access_tokens).to include("token-type"=>"Bearer")
+      end
+
+      it "grants access to resource" do
+        jget authn_checkme_path
+        expect(response).to have_http_status(:ok)
+
+        payload=parsed_body
+        expect(payload).to include("id"=>account[:id])
+        expect(payload).to include("uid"=>account[:uid])
+      end
+
+      it "grants access to resource multiple times" do
+        (1..10).each do |idx|
+          jget authn_checkme_path
+          expect(response).to have_http_status(:ok)
+        end
+      end
+
+      it "can logout" do
+        logout :ok
+        expect(access_tokens?).to be false
+
+        jget authn_checkme_path
+        expect(response).to have_http_status(:unauthorized)
+      end
+
     end
 
     context 'with invalid credentials' do
-      it "rejects credentials"
+      let(:account) { signup user_props, :ok }
+
+      it "rejects credentials" do
+        account[:password] = "password"
+        payload = login account, :unauthorized
+        expect(payload).to include("errors")
+        expect(payload["errors"]).to include(/Invalid login credentials/)
+      end
     end
   end
 
