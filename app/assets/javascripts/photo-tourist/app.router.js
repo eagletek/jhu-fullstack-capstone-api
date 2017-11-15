@@ -7,7 +7,7 @@
 
   RouterFunction.$inject = ["$stateProvider",
                             "$urlRouterProvider",
-                            "photo-tourist.APP_CONFIG"];
+                            "photo-tourist.config.APP_CONFIG"];
 
   function RouterFunction($stateProvider, $urlRouterProvider, APP_CONFIG) {
     $stateProvider

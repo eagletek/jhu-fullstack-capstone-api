@@ -5,7 +5,7 @@
     .module("photo-tourist.cities")
     .directive("ptCities", CitiesDirective);
 
-  CitiesDirective.$inject = ["photo-tourist.APP_CONFIG"];
+  CitiesDirective.$inject = ["photo-tourist.config.APP_CONFIG"];
 
   function CitiesDirective(APP_CONFIG) {
     var directive = {

@@ -5,7 +5,7 @@
     .module("photo-tourist.cities")
     .factory("photo-tourist.cities.City", CityFactory);
 
-  CityFactory.$inject = ["$resource", "photo-tourist.APP_CONFIG"];
+  CityFactory.$inject = ["$resource", "photo-tourist.config.APP_CONFIG"];
   function CityFactory($resource, APP_CONFIG) {
     return $resource(APP_CONFIG.server_url + "/api/cities/:id",
       { id: '@id' },

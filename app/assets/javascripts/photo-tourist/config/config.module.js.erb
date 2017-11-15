@@ -2,12 +2,12 @@
   "use strict";
 
   angular
-    .module("photo-tourist")
-    .constant("photo-tourist.APP_CONFIG", {
+    .module("photo-tourist.config", [])
+    .constant("photo-tourist.config.APP_CONFIG", {
       server_url: "<%= ENV['RAILS_API_URL'] %>",
 
       main_page_html: "<%= asset_path('photo-tourist/pages/main.html') %>",
 
       cities_html: "<%= asset_path('photo-tourist/cities/cities.html') %>"
     });
-})();
+}());
