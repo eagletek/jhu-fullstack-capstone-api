@@ -9,7 +9,8 @@
 
     function AuthnConfig ($authProvider, APP_CONFIG) {
       $authProvider.configure({
-            apiUrl: APP_CONFIG.server_url
+            apiUrl: APP_CONFIG.server_url,
+            validateOnPageLoad: false
           })
     }
 

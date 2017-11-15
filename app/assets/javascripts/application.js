@@ -13,6 +13,8 @@
 //
 //= require photo-tourist/authn/authn.module
 //= require photo-tourist/authn/authn.config
+//= require photo-tourist/authn/authn.service
+//= require photo-tourist/authn/signup/signup.component
 //
 //= require photo-tourist/cities/cities.module
 //= require photo-tourist/cities/cities.service
