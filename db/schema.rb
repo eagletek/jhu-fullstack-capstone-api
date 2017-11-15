@@ -45,12 +45,14 @@ ActiveRecord::Schema.define(version: 20171114024310) do
   add_index "thing_images", ["thing_id"], name: "index_thing_images_on_thing_id", using: :btree
 
   create_table "things", force: :cascade do |t|
-    t.string   "name"
+    t.string   "name",        null: false
     t.text     "description"
     t.text     "notes"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  add_index "things", ["name"], name: "index_things_on_name", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "provider",               default: "email", null: false

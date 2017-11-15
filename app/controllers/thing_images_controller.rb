@@ -1,5 +1,5 @@
 class ThingImagesController < ApplicationController
-  wrap_parameters :thing_images, include: ["image_id", "thing_id", "priority"]
+  wrap_parameters :thing_image, include: ["image_id", "thing_id", "priority"]
   before_action :get_thing, only: [:index, :update, :destroy]
   before_action :get_thing_image, only: [:update, :destroy]
   before_action :authenticate_user!, only: [:create, :update, :destroy]
@@ -22,7 +22,7 @@ class ThingImagesController < ApplicationController
 
   def create
     thing_image = ThingImage.new(thing_image_create_params.merge({
-        image_id: params[:image_id]
+        image_id: params[:image_id],
         thing_id: params[:thing_id]
         }))
     if !Thing.where(id: thing_image.thing_id).exists?
