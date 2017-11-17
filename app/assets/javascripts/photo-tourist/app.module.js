@@ -6,6 +6,7 @@
       "ui.router",
       "photo-tourist.config",
       "photo-tourist.authn",
+      "photo-tourist.layout",
       "photo-tourist.cities"
     ]);
 })();

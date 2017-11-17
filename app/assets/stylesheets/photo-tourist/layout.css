@@ -9,3 +9,7 @@ a:hover {
 body {
   background-color: #eee;
 }
+
+.navbar-static-top {
+  margin-bottom: 19px;
+}

@@ -16,6 +16,9 @@
 //= require photo-tourist/authn/authn.service
 //= require photo-tourist/authn/signup/signup.component
 //
+//= require photo-tourist/layout/layout.module
+//= require photo-tourist/layout/navbar/navbar.component
+//
 //= require photo-tourist/cities/cities.module
 //= require photo-tourist/cities/cities.service
 //= require photo-tourist/cities/cities.controller
