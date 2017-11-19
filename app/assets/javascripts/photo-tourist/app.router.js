@@ -13,15 +13,15 @@
     $stateProvider
       .state("home", {
         url: "/",
-        templateUrl: APP_CONFIG.main_page_html,
-        // controller: ,
-        // controllerAs: ,
+        templateUrl: APP_CONFIG.main_page_html
       })
       .state("signup", {
         url: "/signup",
-        templateUrl: APP_CONFIG.signup_page_html,
-        // controller: ,
-        // controllerAs: ,
+        templateUrl: APP_CONFIG.signup_page_html
+      })
+      .state("authn", {
+        url: "/authn",
+        templateUrl: APP_CONFIG.authn_page_html
       })
 
       $urlRouterProvider.otherwise("/");

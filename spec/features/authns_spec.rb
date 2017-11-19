@@ -106,10 +106,32 @@ RSpec.feature "Authns", type: :feature, js: true do
           expect(page).to have_button("Logout")
         end
       end
-      scenario "can access authenticated resources"
+
+      scenario "can access authenticated resources" do
+        checkme
+        within("div.checkme-user") do
+          expect(page).to have_css("label", text: /#{user_props[:name]}/)
+          expect(page).to have_css("label", text: /#{user_props[:email]}/)
+        end
+      end
     end
     context "invalid login" do
-      scenario "displays error message and leaves user unauthenticated"
+      background(:each) do
+        logout
+      end
+      scenario "displays error message and leaves user unauthenticated" do
+        fillin_login user_props.merge(password: "badpassword")
+        within("#login-form") do
+          click_button("Login")
+        end
+
+        expect(logged_in?(user_props)).to be false
+        expect(page).to have_css("#login-form")
+        within("div#login-submit") do
+          expect(page).to have_css("span.invalid", text: /Invalid credentials/)
+        end
+        expect(page).to have_css("#navbar-loginlabel", text: "Login")
+      end
     end
   end
 
@@ -138,6 +160,21 @@ RSpec.feature "Authns", type: :feature, js: true do
       expect(page).to have_css(*login_criteria)
     end
 
-    scenario "can no longer access authenticated resources"
+    scenario "can no longer access authenticated resources" do
+      logout
+      checkme
+      within("div.checkme-user") do
+        expect(page).to have_no_css("label", text: /#{user_props[:name]}/)
+        expect(page).to have_css("label", text: /Unauthorized/)
+      end
+    end
+  end
+
+  def checkme
+    visit root_path + "#/authn"
+    within("div#authn-check") do
+      click_button("checkMe() says...");
+    end
   end
 end
+

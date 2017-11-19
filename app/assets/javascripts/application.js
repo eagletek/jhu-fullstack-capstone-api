@@ -14,8 +14,11 @@
 //= require photo-tourist/authn/authn.module
 //= require photo-tourist/authn/authn.config
 //= require photo-tourist/authn/authn.service
+//= require photo-tourist/authn/checkme.service
+//= require photo-tourist/authn/whoami.service
 //= require photo-tourist/authn/signup/signup.component
 //= require photo-tourist/authn/session/session.component
+//= require photo-tourist/authn/check/check.directive
 //
 //= require photo-tourist/layout/layout.module
 //= require photo-tourist/layout/navbar/navbar.component

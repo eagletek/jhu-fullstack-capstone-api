@@ -22,14 +22,18 @@
              required="required"/>
     </div>
 
-    <div id="login-submit" class="form-group">
+    <div id="login-submit" class="form-group" ng-class="{'has-error' : $ctrl.loginForm.errors && !login_form.$dirty}">
+      <p ng-repeat="error in $ctrl.loginForm.errors.full_messages"
+         ng-hide="login_form.$dirty">
+        <span class="invalid help-block">{{error}}</span>
+      </p>
       <button type="submit"
               class="btn btn-default form-control"
               ng-disabled="login_form.$invalid"
               name="login_submit">Login</button>
     </div>
 
-    <div id="new-account" class="form-group">
+    <div id="new-account">
       <label>New here?</label>
       <a ui-sref="signup" class="initialism" ng-click="$ctrl.closeDropdown()">Sign Up</a>
     </div>
@@ -40,7 +44,7 @@
         name="logout_form"
         ng-submit="$ctrl.logout()">
 
-    <div id="logout-identity" class="form-group">
+    <div id="logout-identity" class="form-group text-center">
       <label id="user-id"
             class="id control-label"
             ng-if="$ctrl.getCurrentUser()">{{$ctrl.getCurrentUser().id}}</label>

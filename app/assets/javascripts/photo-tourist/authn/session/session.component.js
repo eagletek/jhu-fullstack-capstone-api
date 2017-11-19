@@ -35,9 +35,14 @@
       ////////////
       function login() {
         console.log("login");
+        $scope.login_form.$setPristine();
+        vm.loginForm.errors = null;
         Authn.login(vm.loginForm).then(
-            vm.closeDropdown
-          );
+            vm.closeDropdown,
+            function(response) {
+              console.log("Login failure", response.errors);
+              vm.loginForm["errors"] = response.errors;
+            });
       };
       function logout() {
         Authn.logout().then(
