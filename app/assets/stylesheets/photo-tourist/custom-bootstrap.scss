@@ -1,0 +1,39 @@
+/** Rebrand the bootstrap variables **/
+$brand-primary: darken(#900000, 1.0%);
+$brand-success: #009900;
+$brand-info: #5bc0de;
+$brand-warning: #ffe700;
+$brand-danger: #ff6600;
+
+$body-bg: #eee;
+
+$link-color: $brand-primary;
+$link-hover-color: lighten($link-color, 10%);
+
+$input-border-focus: lighten($brand-primary, 5%);
+
+
+
+/** Import bootstrap **/
+@import 'bootstrap-sass.scss';
+
+
+
+/** Customize components **/
+
+/****** Navbar ******/
+.navbar-static-top {
+  margin-bottom: 19px;
+}
+
+nav.navbar {
+  -webkit-box-shadow: 0px 5px 20px 0px rgba(0,0,0,0.5);
+  -moz-box-shadow: 0px 5px 20px 0px rgba(0,0,0,0.5);
+  box-shadow: 0px 5px 20px 0px rgba(0,0,0,0.5);
+
+  border-bottom: 1px solid $brand-primary;
+}
+
+.navbar-brand .glyphicon {
+  color: $brand-primary;
+}

@@ -1,7 +1,7 @@
 /*
  * Stylesheet Manifest File
  *
- *= require bootstrap
+ *= require photo-tourist/custom-bootstrap
  *
  *= require photo-tourist/layout
  *= require photo-tourist/authn

@@ -178,7 +178,7 @@ GEM
       rails-assets-angular (= 1.5.11)
     rails-assets-angular-ui-router (0.4.2)
       rails-assets-angular (>= 1.0.8, < 2)
-    rails-assets-bootstrap (3.3.7)
+    rails-assets-bootstrap-sass (3.3.7)
       rails-assets-jquery (>= 1.9.1, < 4)
     rails-assets-jquery (3.2.1)
     rails-assets-ng-token-auth (0.0.27)
@@ -307,7 +307,7 @@ DEPENDENCIES
   rails-assets-angular-cookie!
   rails-assets-angular-resource (~> 1.5, >= 1.5.8)!
   rails-assets-angular-ui-router (~> 0.3, >= 0.3.1)!
-  rails-assets-bootstrap (~> 3.3, >= 3.3.7)!
+  rails-assets-bootstrap-sass (~> 3.3, >= 3.3.7)!
   rails-assets-ng-token-auth (~> 0.0, >= 0.0.27)!
   rails_12factor (~> 0.0, >= 0.0.3)
   rspec-rails (~> 3.5, >= 3.5.2)

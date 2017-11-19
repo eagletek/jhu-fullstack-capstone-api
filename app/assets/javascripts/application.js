@@ -1,6 +1,6 @@
 // Javascript Manifest File
 //= require jquery2
-//= require bootstrap
+//= require bootstrap-sass
 //= require angular
 //= require angular-ui-router
 //= require angular-resource
