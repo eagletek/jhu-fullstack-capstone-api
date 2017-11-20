@@ -26,6 +26,7 @@
 //= require photo-tourist/subjects/subjects.module
 //= require photo-tourist/subjects/images/images.component
 //= require photo-tourist/subjects/images/images.service
+//= require photo-tourist/subjects/images/images_authz.directive
 //
 //= require photo-tourist/cities/cities.module
 //= require photo-tourist/cities/cities.service

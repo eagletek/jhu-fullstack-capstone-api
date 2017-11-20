@@ -127,12 +127,12 @@ RSpec.feature "AuthzImages", type: :feature, js:true do
 
       #list should now have new value
       within("pt-image-selector .image-list") do
-        expect(page).to have_css("li a", :text=>/^#{new_caption}/, :wait=>5)
+        expect(page).to have_css("li a", :text=>/#{new_caption}/, :wait=>5)
       end
       #verify exists on server after page refresh following logout
       logout
       within("pt-image-selector .image-list") do
-        expect(page).to have_css("li a", :text=>/^#{new_caption}/, :wait=>5)
+        expect(page).to have_css("li a", :text=>/#{new_caption}/, :wait=>5)
       end
     end
   end

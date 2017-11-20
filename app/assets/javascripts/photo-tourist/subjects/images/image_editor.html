@@ -36,7 +36,7 @@
                 class="btn btn-default"
                 ng-show="!$ctrl.item.id && $ctrl.authz.canCreate"
                 type="submit"
-                ng-disabled="imageform.$invalid"
+                ng-disabled="image_form.$invalid"
                 ng-click="$ctrl.create()">Create Image</button>
 
         <span ng-show="$ctrl.item.id">
@@ -44,7 +44,7 @@
                   class="btn btn-default"
                   type="submit"
                   ng-show="$ctrl.authz.canUpdate"
-                  ng-disabled="!imageform.$dirty"
+                  ng-disabled="!image_form.$dirty"
                   ng-click="$ctrl.update()">Update Image</button>
           <button name="image-delete"
                   class="btn btn-default"
@@ -56,7 +56,7 @@
       <button name="image-clear"
               class="btn btn-default"
               type="submit"
-              ng-show="$ctrl.item.id || imageform.$dirty"
+              ng-show="$ctrl.item.id || image_form.$dirty"
               ng-click="$ctrl.clear()">Clear Image</button>
     </div>
   </div>
