@@ -19,6 +19,7 @@
             Go To<span class="caret"></span>
           </a>
           <ul class="dropdown-menu">
+            <li ng-class="{active: $state.includes('things')}"><a ui-sref="things({id:null})">Things</a></li>
             <li ng-class="{active: $state.includes('images')}"><a ui-sref="images({id:null})">Images</a></li>
             <li role="separator" class="divider"></li>
             <li class="dropdown-header">Developer Tools</li>

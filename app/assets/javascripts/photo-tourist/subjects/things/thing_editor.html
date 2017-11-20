@@ -1,0 +1,101 @@
+<form class="thing-form form-horizontal" name="thing_form">
+  <span class="thing-id id">{{$ctrl.item.id}}</span>
+
+  <div class="alert alert-danger has-error form-group" ng-if="$ctrl.item.errors">
+    <label class="col-sm-2 control-label text-danger">Errors</label>
+    <div class="col-sm-10">
+      <p ng-repeat="error in $ctrl.item.errors.full_messages">
+        <span class="invalid help-block">{{error}}</span>
+      </p>
+    </div>
+  </div>
+
+  <div class="thing-name form-group" ng-class="{'has-error' : $ctrl.item.errors.name && !thing_form['name'].$dirty}">
+    <label class="col-sm-2 control-label" for="thing-name">Name:</label>
+    <div class="col-sm-10">
+      <input class="form-control"
+            name="thing-name"
+            ng-model="$ctrl.item.name"
+            ng-readonly="!$ctrl.authz.canUpdate"
+            maxlength="60"
+            required="required"
+            pattern=".{3,}" title="3 character minimum for name"/>
+    </div>
+    <div ng-repeat="error in $ctrl.item.errors.name" ng-hide="thing_form['name'].$dirty">
+      <p class="col-sm-2"></p>
+      <p class="col-sm-10">
+        <span class="invalid help-block">{{error}}</span>
+      </p>
+    </div>
+  </div>
+
+  <div class="thing-description form-group" ng-class="{'has-error' : $ctrl.item.errors.description && !thing_form['description'].$dirty}">
+    <label class="col-sm-2 control-label" for="thing-description">Description:</label>
+    <div class="col-sm-10">
+      <input class="form-control"
+            name="thing-description"
+            ng-model="$ctrl.item.description"
+            ng-readonly="!$ctrl.authz.canUpdate"
+            maxlength="60"
+            pattern=".{3,}" title="3 character minimum for description"/>
+    </div>
+    <div ng-repeat="error in $ctrl.item.errors.description" ng-hide="thing_form['description'].$dirty">
+      <p class="col-sm-2"></p>
+      <p class="col-sm-10">
+        <span class="invalid help-block">{{error}}</span>
+      </p>
+    </div>
+  </div>
+
+  <div class="thing-notes form-group" ng-show="$ctrl.authz.canGetDetails" ng-class="{'has-error' : $ctrl.item.errors.notes && !thing_form['notes'].$dirty}">
+    <label class="col-sm-2 control-label" for="thing-notes">Notes:</label>
+    <div class="col-sm-10">
+      <input class="form-control"
+            name="thing-notes"
+            ng-model="$ctrl.item.notes"
+            ng-readonly="!$ctrl.authz.canUpdate"
+            maxlength="60"
+            pattern=".{3,}" title="3 character minimum for notes"/>
+    </div>
+    <div ng-repeat="error in $ctrl.item.errors.notes" ng-hide="thing_form['notes'].$dirty">
+      <p class="col-sm-2"></p>
+      <p class="col-sm-10">
+        <span class="invalid help-block">{{error}}</span>
+      </p>
+    </div>
+  </div>
+
+  <div class="thing-controls form-group">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-10">
+      <span ng-show="$ctrl.authz.authenticated">
+        <button name="thing-create"
+                class="btn btn-default"
+                ng-show="!$ctrl.item.id && $ctrl.authz.canCreate"
+                type="submit"
+                ng-disabled="thing_form.$invalid"
+                ng-click="$ctrl.create()">Create Thing</button>
+
+        <span ng-show="$ctrl.item.id" class="btn-group">
+          <button name="thing-update"
+                  class="btn btn-default"
+                  type="submit"
+                  ng-show="$ctrl.authz.canUpdate"
+                  ng-disabled="!thing_form.$dirty"
+                  ng-click="$ctrl.update()">Update Thing</button>
+          <button name="thing-delete"
+                  class="btn btn-default"
+                  type="submit"
+                  ng-show="$ctrl.authz.canDelete"
+                  ng-click="$ctrl.remove()">Delete Thing</button>
+        </span>
+      </span>
+      <button name="thing-clear"
+              class="btn btn-default"
+              type="submit"
+              ng-show="$ctrl.item.id || thing_form.$dirty"
+              ng-click="$ctrl.clear()">Clear Thing</button>
+    </div>
+  </div>
+
+</form>
