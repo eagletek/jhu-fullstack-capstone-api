@@ -76,6 +76,8 @@ RSpec.feature "AuthzImages", type: :feature, js:true do
     it "field filled in with clicked image caption" do
       within("pt-image-editor .image-form") do
         expect(page).to have_field("image-caption", :with=>image.caption)
+        expect(page).to have_css(".image-id", text: image.id, visible: false)
+        expect(page).to have_no_css(".image-id")
       end
     end
   end
@@ -172,7 +174,7 @@ RSpec.feature "AuthzImages", type: :feature, js:true do
     end
   end
 
-  xcontext "images posted" do
+  context "images posted" do
     before(:each) do
       visit_images
     end

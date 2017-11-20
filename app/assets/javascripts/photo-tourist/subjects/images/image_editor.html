@@ -1,0 +1,64 @@
+<form class="image-form form-horizontal" name="image_form">
+  <span class="image-id id">{{$ctrl.item.id}}</span>
+
+  <div class="alert alert-danger has-error form-group" ng-if="$ctrl.item.errors">
+    <label class="col-sm-2 control-label text-danger">Errors</label>
+    <div class="col-sm-10">
+      <p ng-repeat="error in $ctrl.item.errors.full_messages">
+        <span class="invalid help-block">{{error}}</span>
+      </p>
+    </div>
+  </div>
+
+  <div class="image-caption form-group" ng-class="{'has-error' : $ctrl.item.errors.caption && !image_form['caption'].$dirty}">
+    <label class="col-sm-2 control-label" for="image-caption">Caption:</label>
+    <divi class="col-sm-10">
+      <input class="form-control"
+            name="image-caption"
+            ng-model="$ctrl.item.caption"
+            ng-readonly="!$ctrl.authz.canUpdate"
+            maxlength="60"
+            pattern=".{3,}" title="3 character minimum for Caption"/>
+    </div>
+    <div ng-repeat="error in $ctrl.item.errors.caption" ng-hide="image_form['caption'].$dirty">
+      <p class="col-sm-2"></p>
+      <p class="col-sm-10">
+        <span class="invalid help-block">{{error}}</span>
+      </p>
+    </div>
+  </div>
+
+  <div class="image-controls form-group">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-10" ng-class="{'btn-group' : $ctrl.authz.authenticated}">
+      <span ng-show="$ctrl.authz.authenticated">
+        <button name="image-create"
+                class="btn btn-default"
+                ng-show="!$ctrl.item.id && $ctrl.authz.canCreate"
+                type="submit"
+                ng-disabled="imageform.$invalid"
+                ng-click="$ctrl.create()">Create Image</button>
+
+        <span ng-show="$ctrl.item.id">
+          <button name="image-update"
+                  class="btn btn-default"
+                  type="submit"
+                  ng-show="$ctrl.authz.canUpdate"
+                  ng-disabled="!imageform.$dirty"
+                  ng-click="$ctrl.update()">Update Image</button>
+          <button name="image-delete"
+                  class="btn btn-default"
+                  type="submit"
+                  ng-show="$ctrl.authz.canDelete"
+                  ng-click="$ctrl.remove()">Delete Image</button>
+        </span>
+      </span>
+      <button name="image-clear"
+              class="btn btn-default"
+              type="submit"
+              ng-show="$ctrl.item.id || imageform.$dirty"
+              ng-click="$ctrl.clear()">Clear Image</button>
+    </div>
+  </div>
+
+</form>
