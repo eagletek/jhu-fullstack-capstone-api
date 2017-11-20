@@ -57,14 +57,15 @@ Capybara.configure do |config|
   config.default_driver = :rack_test
   #used when :js=>true
   config.javascript_driver = :poltergeist
-#  config.javascript_driver = :selenium
+ # config.javascript_driver = :selenium
 end
 
 Capybara.register_driver :poltergeist do |app|
-  Capybara::Poltergeist::Driver.new( app,
+  Capybara::Poltergeist::Driver.new( app, {
+#js_erros: false,
     phantomjs_logger: StringIO.new,
-#    logger: STDERR
-    )
+#    logger: STDERR,
+    })
 end
 
 if ENV["COVERAGE"] == "true"

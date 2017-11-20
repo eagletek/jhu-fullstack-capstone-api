@@ -23,6 +23,10 @@
 //= require photo-tourist/layout/layout.module
 //= require photo-tourist/layout/navbar/navbar.component
 //
+//= require photo-tourist/subjects/subjects.module
+//= require photo-tourist/subjects/images/images.component
+//= require photo-tourist/subjects/images/images.service
+//
 //= require photo-tourist/cities/cities.module
 //= require photo-tourist/cities/cities.service
 //= require photo-tourist/cities/cities.controller

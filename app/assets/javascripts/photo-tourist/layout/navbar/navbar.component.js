@@ -13,9 +13,10 @@
       return APP_CONFIG.navbar_html;
     };
 
-    NavbarController.$inject = ["$scope", "photo-tourist.authn.Authn"];
-    function NavbarController($scope, Authn) {
+    NavbarController.$inject = ["$scope", "$state", "photo-tourist.authn.Authn"];
+    function NavbarController($scope, $state, Authn) {
       var vm = this;
+      $scope.$state = $state;
       vm.getLoginLabel = getLoginLabel;
 
       vm.$onInit = function() {

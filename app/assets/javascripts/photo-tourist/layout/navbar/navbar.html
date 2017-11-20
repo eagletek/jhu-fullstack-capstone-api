@@ -19,10 +19,10 @@
             Go To<span class="caret"></span>
           </a>
           <ul class="dropdown-menu">
-            <li ui-sref-active="active"><a ui-sref="authn">Authentication Check</a></li>
+            <li ng-class="{active: $state.includes('images')}"><a ui-sref="images({id:null})">Images</a></li>
             <li role="separator" class="divider"></li>
-            <li class="dropdown-header">Nav header</li>
-            <li><a href="">Separated link</a></li>
+            <li class="dropdown-header">Developer Tools</li>
+            <li ui-sref-active="active"><a ui-sref="authn">Authentication Check</a></li>
           </ul>
         </li>
         <form class="navbar-form navbar-right">

@@ -1,7 +1,15 @@
 module UiHelper
+  def create_user
+    user_props = FactoryGirl.attributes_for(:user);
+    user = FactoryGirl.create(:user, user_props)
+    user_props.merge(:id=>user.id, :uid=>user.uid)
+  end
+
   def fillin_signup registration
     visit("#{ui_path}/#/signup") unless page.has_css?("#signup-form")
-    expect(page).to have_css("#signup-form")
+    using_wait_time 5 do
+      expect(page).to have_css("#signup-form")
+    end
 
     fill_in("signup-email", with: registration[:email])
     fill_in("signup-name", with: registration[:name])
