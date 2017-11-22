@@ -261,7 +261,8 @@ RSpec.feature "AuthzThings", type: :feature, js:true do
       context "anonymous user" do
         before(:each) { visit "#{ui_path}/#/things/#{thing.id}" }
         it_behaves_like "displays correct buttons for role",
-            ["Clear Thing"], ["Create Thing", "Update Thing", "Delete Thing"]
+            [],
+            ["Clear Thing", "Create Thing", "Update Thing", "Delete Thing"]
         it_behaves_like "cannot see details"
       end
 

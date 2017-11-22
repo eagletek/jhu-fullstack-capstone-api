@@ -48,7 +48,9 @@
     }
     function updateCanQuery(canQuery, prevQuery) {
       if (canQuery) {
-        vm.items = Thing.query();
+        if (!$stateParams.id) {
+          vm.items = Thing.query();
+        }
       } else {
         vm.items = null;
       }
