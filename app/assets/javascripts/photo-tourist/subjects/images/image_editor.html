@@ -12,7 +12,7 @@
 
   <div class="image-caption form-group" ng-class="{'has-error' : $ctrl.item.errors.caption && !image_form['caption'].$dirty}">
     <label class="col-sm-2 control-label" for="image-caption">Caption:</label>
-    <divi class="col-sm-10">
+    <div class="col-sm-10">
       <input class="form-control"
             name="image-caption"
             ng-model="$ctrl.item.caption"
@@ -21,6 +21,46 @@
             pattern=".{3,}" title="3 character minimum for Caption"/>
     </div>
     <div ng-repeat="error in $ctrl.item.errors.caption" ng-hide="image_form['caption'].$dirty">
+      <p class="col-sm-2"></p>
+      <p class="col-sm-10">
+        <span class="invalid help-block">{{error}}</span>
+      </p>
+    </div>
+  </div>
+
+  <div class="image-things form-group" ng-show="$ctrl.item.id" ng-class="{'has-error' : $ctrl.item.errors.thing_images}">
+    <label class="col-sm-2 control-label" for="image-image_thing">Related Things:</label>
+    <div class="col-sm-10">
+      <ul class="image-things">
+        <li ng-repeat="ti in $ctrl.things | orderBy: priority">
+          <a ui-sref="things({id: ti.thing_id})">
+            <span class="id thing-id">{{ti.thing_id}}</span>
+            {{ti.thing_name}}</a>
+        </li>
+      </ul>
+    </div>
+    <div ng-repeat="error in $ctrl.item.errors.thing_image" ng-hide="image_form.$dirty">
+      <p class="col-sm-2"></p>
+      <p class="col-sm-10">
+        <span class="invalid help-block">{{error}}</span>
+      </p>
+    </div>
+  </div>
+
+  <div class="linkable-things form-group"
+       ng-class="{'has-error' : $ctrl.item.errors.linkable_things}"
+       ng-show="$ctrl.linkable_things.length > 0 && $ctrl.authz.authenticated">
+    <label class="col-sm-2 control-label">Linkable Things:</label>
+    <div class="col-sm-10 linkable-things">
+      <select name="linkable-things"
+              ng-model="$ctrl.selected_linkables"
+              multiple>
+        <option ng-repeat="thing in $ctrl.linkable_things | orderBy:'name'"
+                value="{{thing.id}}">{{thing.name}}</option>
+
+      </select>
+    </div>
+    <div ng-repeat="error in $ctrl.item.errors.thing_image" ng-hide="image_form.$dirty">
       <p class="col-sm-2"></p>
       <p class="col-sm-10">
         <span class="invalid help-block">{{error}}</span>

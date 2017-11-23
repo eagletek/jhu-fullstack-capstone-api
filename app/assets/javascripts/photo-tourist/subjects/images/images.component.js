@@ -25,14 +25,18 @@
 
   ImageSelectorController.$inject = ["$scope",
                                      "$stateParams",
-                                     "photo-tourist.subjects.Image"];
-  function ImageSelectorController($scope, $stateParams, Image) {
+                                     "photo-tourist.subjects.Image",
+                                     "photo-tourist.subjects.ImageThing",
+                                     "photo-tourist.subjects.ImageLinkableThing"];
+  function ImageSelectorController($scope, $stateParams, Image,
+                                   ImageThing, ImageLinkableThing) {
     var vm = this;
 
     vm.$onInit = function() {
       console.log("ImageSelectorController", $scope);
       if (!$stateParams.id) {
-        vm.items = Image.query();
+        $scope.$watch(function() { return vm.authz.authenticated; },
+                      function() { vm.items = Image.query(); });
       }
     };
 
@@ -46,10 +50,14 @@
   };
 
   ImageEditorController.$inject = ["$scope",
+                                   "$q",
                                    "$state",
                                    "$stateParams",
-                                   "photo-tourist.subjects.Image"];
-  function ImageEditorController($scope, $state, $stateParams, Image) {
+                                   "photo-tourist.subjects.Image",
+                                   "photo-tourist.subjects.ImageThing",
+                                   "photo-tourist.subjects.ImageLinkableThing"];
+  function ImageEditorController($scope, $q, $state, $stateParams, Image,
+                                 ImageThing, ImageLinkableThing) {
     var vm = this;
     vm.create = create;
     vm.clear = clear;
@@ -59,7 +67,8 @@
     vm.$onInit = function() {
       console.log("ImageEditorController", $scope);
       if ($stateParams.id) {
-        vm.item = Image.get({id:$stateParams.id});
+        $scope.$watch(function() { return vm.authz.authenticated; },
+                      function() { reload($stateParams.id); });
       }
       else {
         newResource();
@@ -72,6 +81,17 @@
     function newResource() {
       vm.item = new Image();
       return vm.item;
+    };
+
+    function reload(imageId) {
+      var itemId = imageId ? imageId : vm.item.id;
+      console.log("re/loading image:", itemId)
+      vm.item = Image.get({id:itemId});
+      vm.things = ImageThing.query({image_id: itemId});
+      vm.linkable_things = ImageLinkableThing.query({image_id: itemId});
+      $q.all([vm.item.$promise,
+              vm.things.$promise,
+              vm.linkable_things.$promise]).catch(handleError);
     };
 
     function create() {
@@ -89,14 +109,28 @@
     };
 
     function update() {
-      $scope.image_form.$setPristine();
       vm.item.errors = null;
-      vm.item.$update().then(
-        function(){
-          console.log("update complete", vm.item);
-          $state.reload();
-        },
-        handleError);
+      var update = vm.item.$update();
+      linkThings(update);
+    };
+
+    function linkThings(parentPromise) {
+      var promises = [];
+      if (parentPromise) { promises.push(parentPromise); }
+      angular.forEach(vm.selected_linkables, function(linkable){
+          var resource = ImageThing.save({image_id:vm.item.id}, {thing_id: linkable});
+          promises.push(resource.$promise);
+        });
+
+      vm.selected_linkables = [];
+      console.log("waiting for promises", promises);
+      $q.all(promises)
+        .then(function(response){
+            console.log("promise.all response", response);
+            $scope.image_form.$setPristine();
+            reload();
+          },
+          handleError);
     };
 
     function remove() {
@@ -118,6 +152,7 @@
         vm.item.errors = {};
         vm.item["errors"]["full_messages"] = [response];
       };
+      $scope.image_form.$setPristine();
     };
   };
 

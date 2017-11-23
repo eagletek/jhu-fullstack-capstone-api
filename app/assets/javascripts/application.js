@@ -27,9 +27,12 @@
 //= require photo-tourist/subjects/images/images.component
 //= require photo-tourist/subjects/images/images.service
 //= require photo-tourist/subjects/images/images_authz.directive
+//= require photo-tourist/subjects/images/image_linkable_things.service.js
+//= require photo-tourist/subjects/images/image_things.service.js
 //= require photo-tourist/subjects/things/things.component
 //= require photo-tourist/subjects/things/things.service
 //= require photo-tourist/subjects/things/things_authz.directive
+//= require photo-tourist/subjects/things/thing_images.service.js
 //
 //= require photo-tourist/cities/cities.module
 //= require photo-tourist/cities/cities.service

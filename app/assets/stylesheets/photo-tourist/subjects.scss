@@ -7,3 +7,12 @@ form.thing-form .id,
 div.thing-list .id {
   display: none;
 }
+
+form textarea {
+  resize: vertical;
+}
+
+ul.image-things {
+  margin-bottom: 0px;
+  padding-top: 7px;
+}
