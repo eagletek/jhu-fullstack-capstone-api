@@ -2,15 +2,18 @@ class ImagesController < ApplicationController
   before_action :set_image, only: [:show, :update, :destroy]
   wrap_parameters :image, include: ["caption"]
   before_action :authenticate_user!, only: [:create, :update, :destroy]
+  after_action :verify_authorized
 
   def index
-    @images = Image.all
+    authorize Image
+    @images = policy_scope(Image.all)
   end
 
   def show
   end
 
   def create
+    authorize Image
     @image = Image.new(image_params)
     @image.creator_id=current_user.id
 
