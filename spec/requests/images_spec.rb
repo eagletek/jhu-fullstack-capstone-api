@@ -35,7 +35,7 @@ RSpec.describe "Images", type: :request do
     end
   end
   shared_examples "can create" do
-    it "can create" do
+    it "is created" do
       jpost images_path, image_props
       #pp parsed_body
       expect(response).to have_http_status(:created)
