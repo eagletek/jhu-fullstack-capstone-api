@@ -21,7 +21,6 @@ class ImagePolicy < ApplicationPolicy
 
   class Scope < Scope
     def user_roles
-      user_criteria = @user ? "=#{@user.id}" : "is null"
       joins_clause = [
           "left join Roles r on r.mname='Image'",
           "r.mid=Images.id",
