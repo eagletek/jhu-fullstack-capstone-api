@@ -15,6 +15,9 @@
         controller: ImageEditorController,
         bindings: {
           authz: "<"
+        },
+        require: {
+          imagesAuthz: "^ptImagesAuthz"
         }
     });
 
@@ -25,19 +28,22 @@
 
   ImageSelectorController.$inject = ["$scope",
                                      "$stateParams",
+                                     "photo-tourist.authz.Authz",
                                      "photo-tourist.subjects.Image",
                                      "photo-tourist.subjects.ImageThing",
                                      "photo-tourist.subjects.ImageLinkableThing"];
-  function ImageSelectorController($scope, $stateParams, Image,
+  function ImageSelectorController($scope, $stateParams, Authz, Image,
                                    ImageThing, ImageLinkableThing) {
     var vm = this;
 
     vm.$onInit = function() {
       console.log("ImageSelectorController", $scope);
-      if (!$stateParams.id) {
-        $scope.$watch(function() { return vm.authz.authenticated; },
-                      function() { vm.items = Image.query(); });
-      }
+      $scope.$watch(Authz.getAuthorizedUserId,
+                    function() {
+                      if (!$stateParams.id) {
+                        vm.items = Image.query();
+                      }
+                    });
     };
 
     return;
@@ -53,12 +59,14 @@
                                    "$q",
                                    "$state",
                                    "$stateParams",
+                                   "photo-tourist.authz.Authz",
                                    "photo-tourist.subjects.Image",
                                    "photo-tourist.subjects.ImageThing",
                                    "photo-tourist.subjects.ImageLinkableThing"];
-  function ImageEditorController($scope, $q, $state, $stateParams, Image,
+  function ImageEditorController($scope, $q, $state, $stateParams, Authz, Image,
                                  ImageThing, ImageLinkableThing) {
     var vm = this;
+    vm.selected_linkables = [];
     vm.create = create;
     vm.clear = clear;
     vm.update = update;
@@ -66,20 +74,24 @@
 
     vm.$onInit = function() {
       console.log("ImageEditorController", $scope);
-      if ($stateParams.id) {
-        $scope.$watch(function() { return vm.authz.authenticated; },
-                      function() { reload($stateParams.id); });
-      }
-      else {
-        newResource();
-      }
+      $scope.$watch(Authz.getAuthorizedUserId,
+                    function() {
+                      if ($stateParams.id) {
+                        reload($stateParams.id);
+                      }
+                      else {
+                        newResource();
+                      }
+                    });
     };
 
     return;
     //////////
 
     function newResource() {
+      console.log("New resource");
       vm.item = new Image();
+      vm.imagesAuthz.newItem(vm.item);
       return vm.item;
     };
 
@@ -89,6 +101,7 @@
       vm.item = Image.get({id:itemId});
       vm.things = ImageThing.query({image_id: itemId});
       vm.linkable_things = ImageLinkableThing.query({image_id: itemId});
+      vm.imagesAuthz.newItem(vm.item);
       $q.all([vm.item.$promise,
               vm.things.$promise,
               vm.linkable_things.$promise]).catch(handleError);

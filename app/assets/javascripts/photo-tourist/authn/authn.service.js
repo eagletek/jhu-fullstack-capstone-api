@@ -12,6 +12,7 @@
     service.user = null;
     service.isAuthenticated = isAuthenticated;
     service.getCurrentUserName = getCurrentUserName;
+    service.getCurrentUserId = getCurrentUserId;
     service.getCurrentUser = getCurrentUser;
     service.login = login;
     service.logout = logout;
@@ -35,6 +36,9 @@
     };
     function getCurrentUserName() {
       return service.user ? service.user.name : null;
+    };
+    function getCurrentUserId() {
+      return service.user ? service.user.id : null;
     };
     function getCurrentUser() {
       return service.user;

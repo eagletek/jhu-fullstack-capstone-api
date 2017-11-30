@@ -15,7 +15,11 @@
         controller: ThingEditorController,
         bindings: {
           authz: "<"
+        },
+        require: {
+          thingsAuthz: "^ptThingsAuthz"
         }
+
     });
 
   thingSelectorTemplateUrl.$inject = ["photo-tourist.config.APP_CONFIG"];
@@ -25,23 +29,21 @@
 
   ThingSelectorController.$inject = ["$scope",
                                      "$stateParams",
+                                     "photo-tourist.authz.Authz",
                                      "photo-tourist.subjects.Thing",
                                      "photo-tourist.subjects.ThingImage"];
-  function ThingSelectorController($scope, $stateParams, Thing, ThingImage) {
+  function ThingSelectorController($scope, $stateParams, Authz, Thing, ThingImage) {
     var vm = this;
 
     vm.$onInit = function() {
       console.log("ThingSelectorController", $scope);
-      if (!$stateParams.id) {
-        $scope.$watch(function() { return vm.authz.authenticated; },
-                      function() {
-                        if (vm.authz.canQuery) {
-                          vm.items = Thing.query();
-                        } else {
-                          vm.items = null;
-                        }
-                      });
-      }
+      $scope.$watch(Authz.getAuthorizedUserId,
+                    function() {
+                      console.log("Thing selector - user id changed");
+                      if (!$stateParams.id) {
+                        vm.items = Thing.query();
+                      }
+                    });
     };
 
     return;
@@ -57,9 +59,10 @@
                                    "$q",
                                    "$state",
                                    "$stateParams",
+                                   "photo-tourist.authz.Authz",
                                    "photo-tourist.subjects.Thing",
                                    "photo-tourist.subjects.ThingImage"];
-  function ThingEditorController($scope, $q, $state, $stateParams, Thing, ThingImage) {
+  function ThingEditorController($scope, $q, $state, $stateParams, Authz, Thing, ThingImage) {
     var vm = this;
     vm.create = create;
     vm.clear = clear;
@@ -70,13 +73,15 @@
 
     vm.$onInit = function() {
       console.log("ThingEditorController", $scope);
-      if ($stateParams.id) {
-        $scope.$watch(function() { return vm.authz.authenticated; },
-                      function() { reload($stateParams.id); });
-      }
-      else {
-        newResource();
-      }
+      $scope.$watch(Authz.getAuthorizedUserId,
+                    function() {
+                      if ($stateParams.id) {
+                        reload($stateParams.id);
+                      }
+                      else {
+                        newResource();
+                      }
+                    });
     };
 
     return;
@@ -84,6 +89,7 @@
 
     function newResource() {
       vm.item = new Thing();
+      vm.thingsAuthz.newItem(vm.item);
       return vm.item;
     };
 
@@ -92,6 +98,7 @@
       console.log("re/loading thing:", itemId)
       vm.images = ThingImage.query({thing_id: itemId});
       vm.item = Thing.get({id:itemId});
+      vm.thingsAuthz.newItem(vm.item);
       vm.images.$promise.then(
           function(){
             angular.forEach(vm.images, function(ti) {
